@@ -21,7 +21,7 @@
 		WHERE 
 			p.post_type = 'product_variation'
 			AND t.name <> 'variable'
-		ORDER BY size, category, product_name, plan DESC
+		ORDER BY size, category, plan, price, product_name ASC
 	", ARRAY_A);
 
 
@@ -31,7 +31,7 @@
 
 		$row['size'] =  ucfirst($row['size']);
 		$row['category'] = strtolower($row['category']);
-		$row['product_name'] = strtolower($row['product_name']);
+		$row['product_name'] = ucfirst($row['product_name']);
 		$row['plan'] = strtolower($row['plan']);
 
 		$min_price = '';
@@ -42,7 +42,6 @@
 			$min_price = $row['price'] ;
 		}
 	
-
 		$post;
 		if(array_key_exists($row['parent'], $posts)){
 			$post = $posts[$row['parent']];
@@ -52,21 +51,26 @@
 		}
 
 		// Buscar imagenes del producto
-		// **********************************
-		$sql = "
-			SELECT
-				post_name,
-				guid
-			FROM wp_posts
-			WHERE
-				post_type = 'attachment'
-				AND post_parent = ".$post->ID;
-		$gallery = $wpdb->get_results($sql);
+		// ***************************************
+		// $sql = "
+		// SELECT
+		// 	 post_name,
+		// 	 guid
+		// FROM wp_posts
+		// WHERE
+		// 	 post_type = 'attachment'
+		// 	 AND post_parent = ".$post->ID;
+		// $gallery = $wpdb->get_results($sql);
+		// ***************************************
+
+		// Galeria del producto
+		$gallery['thumnbnail'] = get_the_post_thumbnail_url( $post->ID );
 
 		$service[ $row['category'] ][ $row['size'] ][ $row['product_name'] ]['gallery'] = $gallery;
 		$service[ $row['category'] ][ $row['size'] ][ $row['product_name'] ]['plan'][ $row['plan'] ] = $row;
 		$service[ $row['category'] ][ $row['size'] ][ $row['product_name'] ]['content'] = $post;
 		$service[ $row['category'] ][ $row['size'] ][ $row['product_name'] ]['price-min'] = $min_price;
+
 	}
 
 	$s = json_encode( $service, JSON_UNESCAPED_UNICODE );
@@ -80,7 +84,6 @@
 	}
 ?>
 <script type='text/javascript'>
-
 	var extras = {}; // Extras
 	<?php if(!empty($e)){ ?>
 		extras = $.parseJSON(JSON.stringify(eval( <?php echo $e; ?>)));
@@ -92,12 +95,10 @@
 		'Grande' : '<?php echo get_home_url(); ?>/img/grande.png',
 		'Pequeño' : '<?php echo get_home_url(); ?>/img/pequeno.png',
 	};
-
 	var kmibox_param = {
 		"fase1":"",
 		"fase2":"",
 		"fase3":"",
 	};
-
 </script>
 <script type='text/javascript' src="<?php echo get_home_url(); ?>/js/service_compra.js"></script>

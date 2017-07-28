@@ -21,10 +21,22 @@ p{
 p span{
 	color:#f7f4a3;
 }
+
+.btn-price{
+	font-size: 20px; 
+}
+.btn-name{
+	font-size: 16px; 
+}
+
+.center-box{
+	display: inline;
+}
 #group-section{
 	min-height: 70vh;
 }
 .btn-sm-kmibox:hover,
+.btn-sm-kmibox-price:hover,
 .btn-kmibox:hover{
 	background: #00b190;
 	color:#fff!important;
@@ -32,6 +44,9 @@ p span{
 
 .btn-fullwidth{
 	width: 100%;
+}
+.btn-sm-kmibox-price{
+	border-radius: 22px!important;
 }
 .btn-sm-kmibox-default{
 	background: #4874f5!important;
@@ -256,6 +271,9 @@ footer ul li{
 }
 
 @media (max-width:360px) and (min-width:200px) {
+	#title{
+		font-size: 10px; 
+	}
 	#top .container{
 		margin-top: 0px;
 	}
@@ -276,6 +294,10 @@ footer ul li{
 	}
 	.btn-kmibox{
 		padding: 20px;
+		width: 100%;
+	}
+	.btn-sm-kmibox{
+	    font-size: 16px;
 	}
 	#section-comment{
 		background-size: cover;
@@ -290,7 +312,7 @@ footer ul li{
 	}
 
 	h2{
-		font-size: 29px;
+		font-size: 18px;
 	}
 
 	p{

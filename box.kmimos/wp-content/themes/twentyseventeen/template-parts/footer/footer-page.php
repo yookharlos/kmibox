@@ -12,12 +12,8 @@
 		<article class="col-sm-4 text-left">			
 			<h3>Navega</h3>
 			<ul class="list-unstyled">
-				<li>Nosotros</li>
 				<li>Nuestra promesa</li>
-				<li>Blog</li>
 				<li>Términos y condiciones</li>
-				<li>Nuestros aliados</li>
-				<li>Preguntas y respuestas</li>
 			</ul>
 		</article>
 		<article class="col-sm-4 text-left">

@@ -80,6 +80,7 @@ $(function($){
 			// Fase #1 - Tamaño
 			// ***************************************
 			case 1:
+
 				// Titulo
 				$("#title").text( $('[data-fase="1"]').data("title") );
 				
@@ -93,7 +94,7 @@ $(function($){
 						$('<article class="text-center col-sm-'+col+'"></article>')
 						.append( 
 						$('<h2>')
-							.text(key)
+							.text(ucfirst(key))
 						,$('<img />')
 							.addClass('img-responsive')
 							.attr({
@@ -125,10 +126,7 @@ $(function($){
 
 				$.each(producto, function(key, val){
 
-					var img='';
-					$.each(val['gallery'], function(index, img){
-						img = '<img src="'+img.guid+'" class="img-responsive">';
-					});
+					var img = '<img src="'+val['gallery']['thumnbnail']+'" class="img-responsive">';
 
 					console.log(img);
 
@@ -137,8 +135,9 @@ $(function($){
 						$('<article class="text-center col-sm-'+col+'"></article>')
 						.append( 
 							$('<h2>')
-								.text(key)
+								.text(ucfirst(key))
 							,$(img)
+								.css('width', 200)
 							,$('<div>')
 								.addClass('pag-image')
 							,$('<div>').append(
@@ -149,51 +148,65 @@ $(function($){
 									.addClass('btn')
 									.addClass('btn-sm-kmibox')
 									.attr({
-										'data-value': key,
+										'data-value': ucfirst(key),
 										'data-target': "2",
 									})
 							)
 							,$('<p>')
-								.text(val['content']['post_content'])
+								.text(ucfirst(val['content']['post_content']))
 						)
 					);
 				});
 			break;
-			
 			// ***************************************
 			// Fase #3 - Plan
 			// ***************************************
-			case 3:
+			case 3: 
+
 				// Cargar Items
 				var plan = service[ kmibox_param['fase1'] ][ kmibox_param['fase2'] ]['plan'];
-				$('[data-fase="3"]').empty();
-				var col = cal_column(plan);
-				$.each(plan, function(key, val){
+				var image= service[ kmibox_param['fase1'] ][ kmibox_param['fase2'] ]['gallery']['thumnbnail'];				
+				var col  = cal_column(plan);
 
-					$('[data-fase="3"]')
+				$('[data-fase="3"]').empty();
+
+				$('[data-fase="3"]')
 					.append(
-						$('<article class="text-center col-sm-'+col+'"></article>')
-						.append( 
-						$('<h2>')
-							.text(key)
-						,$('<img />')
+						$('<img />')
 							.addClass('img-responsive')
 							.attr({
-								'src': icons[key],
+								'src': image,
 								'width': '300px',
 							})
-						,$('<div>')
-							.addClass('pag-image')
-						,$('<button data-action="next">Seleccionar</button>')
-							.addClass('btn')
-							.addClass('btn-sm-kmibox')
-							.attr({
-								'data-value': key,
-								'data-target': "3",
-								'data-object': val['ID'],
-							})
-						)
 					);
+				$.each(plan, function(key, val){
+
+					var price = val["price"];
+
+					$('[data-fase="3"]')
+						.addClass('text-center')
+						.append(
+							$('<article class="text-center center-box col-xs-12 col-md-4"></article>')
+							.append( 
+								$('<button></button>')
+									.addClass('btn btn-sm-kmibox btn-sm-kmibox-price')
+									.attr({
+										'data-action': 'next',
+										'data-value': key,
+										'data-target': '3',
+										'data-object': val['ID'],
+									})
+									.append(
+										$('<span></span>')
+											.addClass('btn-price')
+											.text('$'+price),
+										$('<br>'),
+										$('<span></span>')
+											.addClass('btn-name')
+											.text(ucfirst(key))
+										)
+								)
+						);
 				});
 			break;
 			// ***************************************
@@ -202,9 +215,14 @@ $(function($){
 			case 4:
 				// Cargar Items
 				var extras = service[ kmibox_param['fase1'] ][ kmibox_param['fase2'] ]['plan'];
-
+				break;
 		}
 	}
+
+
+	// ***************************************
+	// Global Function 
+	// ***************************************
 
 	function cal_column(_service){
 		var col = 4;
@@ -213,6 +231,10 @@ $(function($){
 			col = 12 / count_items;
 		}
 		return col;
+	}
+
+	function ucfirst(string){
+		return string.substr(0,1).toUpperCase()+string.substr(1,string.length).toLowerCase();
 	}
 
 	loadFase(1);

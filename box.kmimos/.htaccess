@@ -4,10 +4,10 @@
 RewriteEngine On
 RewriteBase /
 
-RewriteRule ^css/(.*) /wp-content/themes/twentyseventeen/assets/assets_theme/css/$1 [QSA,L]
-RewriteRule ^img/(.*) /wp-content/themes/twentyseventeen/assets/assets_theme/img/$1 [QSA,L]
-RewriteRule ^js/(.*) /wp-content/themes/twentyseventeen/assets/assets_theme/js/$1 [QSA,L]
-RewriteRule ^plugins/(.*) /wp-content/themes/twentyseventeen/assets/assets_theme/plugins/$1 [QSA,L]
+RewriteRule ^css/(.*) /wp-content/themes/kmibox/assets/css/$1 [QSA,L]
+RewriteRule ^img/(.*) /wp-content/themes/kmibox/assets/img/$1 [QSA,L]
+RewriteRule ^js/(.*) /wp-content/themes/kmibox/assets/js/$1 [QSA,L]
+RewriteRule ^plugins/(.*) /wp-content/themes/kmibox/assets/plugins/$1 [QSA,L]
 
 RewriteRule ^/index\.php$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
